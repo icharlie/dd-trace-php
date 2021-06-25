@@ -1595,7 +1595,9 @@ void dd_read_distributed_tracing_ids(void) {
         zval parent_zv;
         ZVAL_STR(&parent_zv, parent_id_str);
         if ((ZSTR_LEN(parent_id_str) != 1 || ZSTR_VAL(parent_id_str)[0] != '0') &&
-            !ddtrace_push_userland_span_id(&parent_zv)) {
+            ddtrace_push_userland_span_id(&parent_zv)) {
+            DDTRACE_G(distributed_parent_trace_id) = DDTRACE_G(span_ids_top)->id;
+        } else {
             DDTRACE_G(trace_id) = 0;
         }
     }
