@@ -199,7 +199,7 @@ clang_format_check:
 	done <<< $$($(MAKE) clang_find_files_to_lint)
 
 clang_format_fix:
-	$(MAKE) clang_find_files_to_lint | xargs clang-format -i
+	$(MAKE) clang_find_files_to_lint | xargs $(CLANG_FORMAT) -i
 
 EXT_DIR:=/opt/datadog-php
 PACKAGE_NAME:=datadog-php-tracer

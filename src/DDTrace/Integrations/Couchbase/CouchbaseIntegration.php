@@ -23,12 +23,34 @@ class CouchbaseIntegration extends Integration
      */
     public function init()
     {
+        \DDTrace\trace_method('Couchbase\Bucket', 'remove', function (SpanData $span, $args) use ($integration) {
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'remove');
+            $span->meta['couchbase.remove'] = '';
+        });
+
+        \DDTrace\trace_method('Couchbase\Bucket', 'insert', function (SpanData $span, $args) use ($integration) {
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'insert');
+            $span->meta['couchbase.insert'] = '';
+        });
+
+        \DDTrace\trace_method('Couchbase\Bucket', 'upsert', function (SpanData $span, $args) use ($integration) {
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'upsert');
+            $span->meta['couchbase.upsert'] = '';
+        });
+
+        \DDTrace\trace_method('Couchbase\Bucket', 'replace', function (SpanData $span, $args) use ($integration) {
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'replace');
+            $span->meta['couchbase.replace'] = '';
+        });
+
         \DDTrace\trace_method('Couchbase\Bucket', 'get', function (SpanData $span, $args) use ($integration) {
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'get');
             $span->meta['couchbase.get'] = '';
         });
 
         \DDTrace\trace_method('Couchbase\Bucket', 'query', function (SpanData $span, $args) use ($integration) {
-            $span->meta['couchbase.get'] = '';
+            $this->addSpanDefaultMetadata(span, 'Bucket', 'query');
+            $span->meta['couchbase.query'] = '';
         });
     }
 
@@ -41,10 +63,10 @@ class CouchbaseIntegration extends Integration
      */
     public function addSpanDefaultMetadata(SpanData $span, $class, $method)
     {
-        $span->name = $class . '.' . $method;
+        $span->name = "$class.$method";
+        $span->service = CouchbaseIntegration::NAME;
         $span->resource = $method;
         $span->type = Type::COUCHBASE;
-        $span->service = CouchbaseIntegration::NAME;
     }
 
 
