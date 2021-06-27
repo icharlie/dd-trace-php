@@ -4,6 +4,7 @@ namespace DDTrace\Integrations;
 
 use DDTrace\Integrations\CakePHP\CakePHPIntegration;
 use DDTrace\Integrations\CodeIgniter\V2\CodeIgniterIntegration;
+use DDTrace\Integrations\Couchbase\CouchbaseIntegration;
 use DDTrace\Integrations\Curl\CurlIntegration;
 use DDTrace\Integrations\ElasticSearch\V1\ElasticSearchIntegration;
 use DDTrace\Integrations\Eloquent\EloquentIntegration;
@@ -104,6 +105,8 @@ class IntegrationsLoader
 
         // For PHP 7.0+ use C level deferred integration loader
         if (\PHP_MAJOR_VERSION < 7) {
+            $this->integrations[CouchbaseIntegration::NAME] =
+                '\DDTrace\Integrations\Couchbase\CouchbaseIntegration';
             $this->integrations[ElasticSearchIntegration::NAME] =
                 '\DDTrace\Integrations\ElasticSearch\V1\ElasticSearchIntegration';
             $this->integrations[MemcachedIntegration::NAME] =

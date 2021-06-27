@@ -18,4 +18,5 @@ class Type
     const MEMCACHED = 'memcached';
     const MONGO = 'mongodb';
     const REDIS = 'redis';
+    const COUCHBASE = 'couchbase';
 }
