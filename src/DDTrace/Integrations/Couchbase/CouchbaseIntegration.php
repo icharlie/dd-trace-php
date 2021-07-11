@@ -34,7 +34,7 @@ class CouchbaseIntegration extends Integration
         \DDTrace\trace_method('Couchbase\Bucket', 'query', function (SpanData $span, $args) {
             if (isset($args[0])) {
                 $queryType = $this->getQueryType($args[0]);
-                $this->addSpanDefaultMetadata($span, 'Bucket', 'query');
+                $this->addSpanDefaultMetadata($span, 'Couchbase\Bucket', 'query');
                 $span->resource = $this->getQueryValue($args[0], $queryType);
             }
         });
@@ -43,8 +43,8 @@ class CouchbaseIntegration extends Integration
     public function traceCommand($command)
     {
         $integration = $this;
-        \DDTrace\trace_method('Bucket', $command, function (SpanData $span, $args) use ($integration, $command) {
-            $integration->addSpanDefaultMetadata($span, 'Bucket', $command);
+        \DDTrace\trace_method('Couchbase\Bucket', $command, function (SpanData $span, $args) use ($integration, $command) {
+            $integration->addSpanDefaultMetadata($span, 'Couchbase\Bucket', $command);
             if (!is_array($args[0])) {
                 $span->meta['Bucket.query'] = $command . ' ' . Obfuscation::toObfuscatedString($args[0]);
             }
